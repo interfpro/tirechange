@@ -50,7 +50,7 @@ public class CsvService {
     }
 
     public void writeCsvFile(String filePath, List<Workshop> workshops) {
-        try (CSVWriter writer = new CSVWriter(new FileWriter(filePath))) {
+        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(new FileOutputStream(filePath), StandardCharsets.UTF_8))) {
             for (Workshop workshop : workshops) {
                 String[] item = { workshop.getId(), workshop.getName(), workshop.getAddress(), workshop.getTypes() };
                 writer.writeNext(item);
