@@ -5,11 +5,10 @@ import com.opencsv.CSVWriter;
 import org.springframework.stereotype.Service;
 import smit.model.Workshop;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public class CsvService {
 
     public List<Workshop> readCsvFile(String filePath) {
         List<Workshop> workshops = new ArrayList<>();
-        try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
+        try (CSVReader reader = new CSVReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
             List<String[]> items = reader.readAll();
             for (String[] item : items) {
                 workshops.add(new Workshop(item[0], item[1], item[2], item[3]));
